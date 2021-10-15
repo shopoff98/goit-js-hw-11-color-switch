@@ -8,38 +8,27 @@ const colors = [
 ]
 
 refs = {
-    body: document.querySelector('body-js'),
     startBtn: document.querySelector('[data-action="start"]'),
     stopBtn: document.querySelector('[data-action="stop"]')
 };
 
-
+const randomIntegerFromInterval = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 const CHANGE_TIME_COLORS = 1000;
-const newColor = colors[randomIntegerFromInterval([0], [length - 1])];
+ let timerId = null;
+  
 
-console.log(newColor);
-
-refs.startBtn.addEventListener('click', changeColor);
-// refs.stopBtn.addEventListener('click', stopcChangeColor);
-
-
-function changeColor(e) {
-    
-    setInterval(() => {
-
-        refs.body.style.backgroundColor = '#009688';
+  refs.startBtn.addEventListener("click", () => {
+    timerId = setInterval(() => {
+        let color = colors[Math.floor(Math.random()*colors.length-1)];
+        document.body.style.backgroundColor = color;
+        refs.startBtn.disabled = true;
     }, CHANGE_TIME_COLORS);
-};
+  });
+  
+  refs.stopBtn.addEventListener("click", () => {
+    clearInterval(timerId);
+    refs.startBtn.disabled = false;
+  });
 
-
-function randomIntegerFromInterval(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-
-// function newColor(colors) {
-//     return randomIntegerFromInterval(colors[0],colors[5])
-// };
-
-
-console.log(colors.indexOf(colors))
